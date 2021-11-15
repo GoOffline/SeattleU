@@ -207,11 +207,11 @@ valid_df2$CODE_GENDER <- as.factor(valid_df2$CODE_GENDER)
 valid_df2$NAME_INCOME_TYPE <-as.factor(valid_df2$NAME_INCOME_TYPE)
 str(valid_df2)
 
-#Deal with Unbalanced Data ......................................................................................................................................................................................................................................................
+#Deal with Unbalanced Data .......................................................................................
 train_df2_balance <- ROSE(TARGET ~ CODE_GENDER + AMT_ANNUITY + NAME_INCOME_TYPE 
                           + DAYS_REGISTRATION,data = train_df2, seed = 1000)$data
 
-#Build a Classification Tree (DF2) ..............................................................................................................................................................................................................................................
+#Build a Classification Tree (DF2) ...............................................................................
 class_tr1df2 <- rpart(TARGET ~ CODE_GENDER + AMT_ANNUITY + NAME_INCOME_TYPE 
                       + DAYS_REGISTRATION, 
                       data = train_df2_balance,  method = "class", 
@@ -283,12 +283,12 @@ valid_df3$CODE_GENDER <- as.factor(valid_df3$CODE_GENDER)
 valid_df3$NAME_FAMILY_STATUS<- as.factor(valid_df3$NAME_FAMILY_STATUS)
 str(valid_df3)
 
-#Deal with Unbalanced Data ......................................................................................................................................................................................................................................................
+#Deal with Unbalanced Data ...............................................................................................
 train_df3_balance <- ROSE(TARGET ~  CODE_GENDER + PERCENT_OF_INCOME + 
                             NAME_FAMILY_STATUS , data = train_df3, seed = 1000)$data
 #Lowest xerror .9836590 Use the corresponding cp value for the classification tree. .005315342
 
-#Build a Classification Tree (DF3) ..............................................................................................................................................................................................................................................
+#Build a Classification Tree (DF3) .......................................................................................
 class_tr1df3 <- rpart(TARGET ~ CODE_GENDER + PERCENT_OF_INCOME + NAME_FAMILY_STATUS,
                       data = train_df3_balance, method = "class", 
                       minbucket = 2,maxdepth = 7, cp = .005315342)
@@ -323,7 +323,7 @@ library(ROSE)
 ## Loaded ROSE 0.0-3
 ROSE::roc.curve(valid_df3$TARGET, class_tr1df3_valid_predict)
 
-#Create Dataframe 4---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Create Dataframe 4-------------------------------------------------------------------------------------------
 #Determine which variables are relevant in determining if our client hasd payment difficulties or Not 
 #SKU_ID_CURR, TARGET, CODE_GENDER, AMT_INCOME, NAME_HOUSING_TYPE, NAME_EDUCATION, CNT_FAM_MEMBERS
 df4 <- credit %>% select(SK_ID_CURR,TARGET,CODE_GENDER, AMT_INCOME_TOTAL,NAME_HOUSING_TYPE, CNT_FAM_MEMBERS)
@@ -337,7 +337,7 @@ str(df4)
 library(tidyr)
 df4 <- drop_na(df4) #Drop rows with missing records
 nrow(df4)
-#Split data into training and valuation sets (DF4).............................................................................................................................................................................................................................
+#Split data into training and valuation sets (DF4).......................................................
 set.seed(1000)
 train_index_df4 <- sample(1:nrow(df4), 0.6*nrow(df4))
 valid_index_df4 <- setdiff(1:nrow(df4), train_index_df4)
@@ -347,12 +347,12 @@ nrow(train_df4) #Checks to see the number of rows after the split
 nrow(valid_df4) #Checks to see the number of rows after the split
 str(train_df4)
 str(valid_df4)
-#Deal with Unbalanced Data ......................................................................................................................................................................................................................................................
+#Deal with Unbalanced Data ..............................................................................
 train_df4_balance <- ROSE(TARGET ~ CODE_GENDER + AMT_INCOME_TOTAL + 
                             NAME_HOUSING_TYPE  + CNT_FAM_MEMBERS , 
                           data = train_df4, seed = 1000)$data
 
-#Build a Classification Tree (DF4) ..............................................................................................................................................................................................................................................
+#Build a Classification Tree (DF4) ......................................................................
 class_tr1df4 <- rpart(TARGET ~ CODE_GENDER + AMT_INCOME_TOTAL + 
                         NAME_HOUSING_TYPE  + CNT_FAM_MEMBERS, 
                       data = train_df4_balance,method = "class", 

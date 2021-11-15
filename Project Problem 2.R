@@ -467,6 +467,9 @@ credit_predict
 #to produce a tree with a somewhat high accuracy between the training and 
 #validation sets, as well as a somewhat strong, though not great ROC curve. 
 
+# ROC curves for all models were very close to each other, the chosen model 
+# has a higher accuracy and thus why it was chosen. 
+
 # The given data, and new data can be used by Stark Inc to be used in the 
 # future, specifically to understand new customers and their risk levels. 
 
